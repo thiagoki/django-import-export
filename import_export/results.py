@@ -2,6 +2,9 @@ from collections import OrderedDict
 from tablib import Dataset
 
 from django.core.exceptions import NON_FIELD_ERRORS
+from django.conf import settings
+
+HIDE_TRACEBACK_LOG = getattr(settings, 'IMPORT_EXPORT_HIDE_TRACEBACK_LOG', False)
 
 
 class Error:
@@ -9,6 +12,7 @@ class Error:
         self.error = error
         self.traceback = traceback
         self.row = row
+        self.hide_traceback_log = HIDE_TRACEBACK_LOG
 
 
 class RowResult:

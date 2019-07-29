@@ -71,7 +71,9 @@
             <li>
               {% trans "Line number" %}: {{ line }} - {{ error.error }}
               <div><code>{{ error.row.values|join:", " }}</code></div>
+              {% if not error.hide_traceback_log %}
               <div class="traceback">{{ error.traceback|linebreaks }}</div>
+              {% endif %}
             </li>
           {% endfor %}
         {% endfor %}
