@@ -296,7 +296,15 @@ class ImportMixin(ImportExportMixinBase):
             except UnicodeDecodeError as e:
                 return HttpResponse(_(u"<h1>Imported file has a wrong encoding: %s</h1>" % e))
             except Exception as e:
-                return HttpResponse(_(u"<h1>%s encountered while trying to read file: %s</h1>" % (type(e).__name__, import_file.name)))
+                #return HttpResponse(_(u"<h1>%s encountered while trying to read file: %s</h1>" % (type(e).__name__, import_file.name)))
+                res_kwargs = self.get_import_resource_kwargs(request, form=form, *args, **kwargs)
+                resource = self.get_import_resource_class()(**res_kwargs)
+                context['title'] = _("Import")
+                context['form'] = form
+                context['opts'] = self.model._meta
+                context['invalid_dimensions'] = True
+                return TemplateResponse(request, [self.import_template_name],
+                                context)
 
             # prepare kwargs for import data, if needed
             res_kwargs = self.get_import_resource_kwargs(request, form=form, *args, **kwargs)
