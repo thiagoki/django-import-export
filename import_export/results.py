@@ -115,7 +115,7 @@ class Result:
         self.invalid_rows.append(InvalidRow(
             number=number,
             validation_error=validation_error,
-            values=row.values(),
+            values=row,
         ))
 
     def increment_row_result_total(self, row_result):

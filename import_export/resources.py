@@ -616,6 +616,11 @@ class Resource(metaclass=DeclarativeMetaclass):
                 if raise_errors:
                     raise row_result.errors[-1].error
             elif row_result.validation_error:
+                row_aux = ["" for i in range(len(result.diff_headers))]
+                for i in range(len(row)):
+                    index = result.diff_headers.index(list(row.keys())[i])
+                    row_aux[index] = list(row.values())[i]
+                row = row_aux
                 result.append_invalid_row(i, row, row_result.validation_error)
                 if collect_failed_rows:
                     result.append_failed_row(row, row_result.validation_error)
